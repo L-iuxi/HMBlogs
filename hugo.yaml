@@ -29,5 +29,5 @@ permalinks:
 params:
   theme: "clean"
   favicon: "/favicon.ico"
-  posts-per-page: 5
+  posts-per-page: 3
   toc-auto-numbering: false
