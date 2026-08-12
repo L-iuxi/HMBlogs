@@ -2,7 +2,7 @@
 headless: true
 title: 烩面的blogs
 intro:
-  - hello!我是幸福的烩面，这里是我的个人博客和学习笔记
+  - 幸福的烩面的草稿本
 image: "avatar.jpg"
 list:
   name: "技术栈:"
