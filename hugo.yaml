@@ -27,7 +27,7 @@ permalinks:
   posts: "/posts/:contentbasename/"
 
 params:
-  theme: "light-blue"
+  theme: "clean"
   favicon: "/favicon.ico"
   posts-per-page: 10
   toc-auto-numbering: false
