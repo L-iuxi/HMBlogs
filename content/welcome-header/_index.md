@@ -1,18 +1,11 @@
 ---
 headless: true
-title: "📝 八股文笔记"
+title: "烩面的blogs"
 intro:
-  - "面试知识点整理，按技术栈分类。"
+  - "个人博客，技术笔记。"
   - "持续更新中。"
 image: ""
 list:
   name: "技术栈:"
-  items:
-    - "Go"
-    - "Java"
-    - "Redis"
-    - "MySQL"
-    - "操作系统"
-    - "计算机网络"
-    - "分布式系统"
+  items: []
 ---

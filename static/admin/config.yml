@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: L-iuxi/HMbolgs
+  repo: L-iuxi/HMBlogs
   branch: main
   # 使用 Decap 托管的 OAuth 认证（可选，也可以用自己搭建的）
   # 使用时需要在 GitHub 创建 OAuth App:

@@ -1,5 +1,5 @@
-title: "八股文笔记"
-baseURL: 'https://L-iuxi.github.io/HMbolgs/'
+title: "烩面的blogs"
+baseURL: 'https://L-iuxi.github.io/HMBlogs/'
 locale: 'zh-cn'
 titleCaseStyle: 'none'
 theme: "neopost"
