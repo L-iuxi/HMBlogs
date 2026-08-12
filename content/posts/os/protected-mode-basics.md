@@ -1,7 +1,7 @@
 ---
 title: "保护模式入门 — 从实模式到保护模式"
 date: "2026-01-14T10:00:00+08:00"
-tags: ["操作系统", "保护模式", "x86"]
+tags: ["操作系统", "保护模式"]
 title-images: []
 ending-images: []
 author: "烩面"
@@ -36,7 +36,7 @@ toc-auto-numbering: false
 
 一个段描述符只用来定义一个内存段。结构如下：
 
-![段描述符](image.png)
+![段描述符](ch4-image.png)
 
 | 字段 | 含义 |
 |------|------|
@@ -48,7 +48,7 @@ toc-auto-numbering: false
 | DPL | 特权级：0=内核，3=用户 |
 | S | 0=系统段，1=非系统段（代码/数据段） |
 
-![段描述符结构](image-1.png)
+![段描述符结构](ch4-image-1.png)
 
 ## 全局描述符表 GDT
 
@@ -60,7 +60,7 @@ toc-auto-numbering: false
 
 用于确定段描述符在 GDT/LDT 中的索引位置。
 
-![选择子](image-2.png)
+![选择子](ch4-image-2.png)
 
 | 字段 | 含义 |
 |------|------|
