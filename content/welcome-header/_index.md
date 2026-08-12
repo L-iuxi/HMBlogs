@@ -1,11 +1,12 @@
 ---
 headless: true
-title: "烩面的blogs"
+title: 烩面的blogs
 intro:
-  - "个人博客，技术笔记。"
-  - "持续更新中。"
+  - hello!我是幸福的烩面，这里是我的个人博客和学习笔记
 image: ""
 list:
   name: "技术栈:"
   items: []
+list_name: " "
+list_items: []
 ---
