@@ -6,8 +6,11 @@ intro:
 image: "avatar.jpg"
 list:
   name: "技术栈:"
-  items: []
-list_name: "go "
-list_items:
-  - GO
+  items:
+    - 操作系统
+    - Go
+    - Redis
+    - MySQL
+    - 计算机网络
+    - 分布式
 ---
