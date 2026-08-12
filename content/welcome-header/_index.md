@@ -7,6 +7,6 @@ image: ""
 list:
   name: "技术栈:"
   items: []
-list_name: " "
+list_name: "go "
 list_items: []
 ---
