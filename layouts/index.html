@@ -18,11 +18,13 @@
             {{ end }}
         </div>
         
-        <div id="bio">
         {{ with .Site.GetPage "section" "/sidebar/bio.md" }}
+        {{ if .Content }}
+        <div id="bio">
             {{ .Content | safeHTML }}
-        {{ end }}
         </div>
+        {{ end }}
+        {{ end }}
         
         <div class="small-box">
             {{ with .Site.GetPage "section" "/sidebar/basic-info.md" }}
