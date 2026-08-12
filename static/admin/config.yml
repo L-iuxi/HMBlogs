@@ -2,16 +2,11 @@ backend:
   name: github
   repo: L-iuxi/HMBlogs
   branch: main
-  # 使用 Decap 托管的 OAuth 认证（可选，也可以用自己搭建的）
-  # 使用时需要在 GitHub 创建 OAuth App:
-  #   Homepage URL: https://decapcms.org
-  #   Authorization callback URL: https://decapcms.org/oauth/
-  # 然后将 client_id 填到下面:
-  # base_url: https://decapcms.org
-  # auth_endpoint: /oauth/authorize
+  base_url: https://decapcms.org
+  auth_endpoint: /oauth/authorize
 
 media_folder: "static/images"
-public_folder: "/images"
+public_folder: "/HMBlogs/images"
 
 collections:
   - name: "posts"
