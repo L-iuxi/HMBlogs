@@ -1,0 +1,33 @@
+title: "八股文笔记"
+baseURL: 'https://L-iuxi.github.io/HMbolgs/'
+locale: 'zh-cn'
+titleCaseStyle: 'none'
+theme: "neopost"
+
+languages:
+  zh:
+    locale: zh-cn
+    contentDir: content
+    label: 中文
+    weight: 1
+    params:
+      sidebar:
+        tags:
+          enable: true
+          limit: 10
+          more-text: "更多标签..."
+
+      read-more:
+        length-limit: 120
+        text:
+          more: "展开阅读"
+          less: "收起"
+
+permalinks:
+  posts: "/posts/:contentbasename/"
+
+params:
+  theme: "light-blue"
+  favicon: "/favicon.ico"
+  posts-per-page: 10
+  toc-auto-numbering: false
