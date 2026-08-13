@@ -24,7 +24,7 @@ Agent 智能体核心概念：从反射智能体到 LLM 智能体的演进、上
 - **基于目标的智能体**：例如 GPS 导航系统，用搜索算法找最优路径
 - **基于效用的智能体**：最大化效益期望，如省油省时的路径规划
 - **学习型智能体**：强化学习，例如 AlphaGo
-- **LLM 智能体**：基于大模型实现信息整合与决策，如旅游助手
+- **LLM 智能体**：基于大模型实现信息整合与决策或更多工作，例如旅游助手从 `[确认出行偏好] -> [查询目的地信息] -> [制定行程草案] -> [预订票务住宿]`
 
 ## 智能体的运行模式
 
@@ -97,14 +97,20 @@ Transformer 的注意力复杂度是 O(n²)。上下文越长，无关内容占�
 
 ## Skill 设计
 
-Skill 的核心思路：系统提示只保留索引，完整知识按需加载。
+Skills 是上下文工程里非常有效的一种模式，核心思路是：系统提示只保留索引，完整知识按需加载。
 
-描述符要简洁精准：
+示例：假设有一个智能助手应用，它有多个功能模块（Skills）：
+
+- 天气查询：查询天气信息
+- 翻译功能：翻译文本
+- 日程管理：管理用户的日程安排
+
+这些功能并不是在系统启动时全部加载，而是根据用户的需求动态加载。例如，如果用户说"今天的天气如何？"，系统只会加载与天气相关的 Skill 来处理请求，完成后再释放相关资源。
+
+skill 描述符需保障简洁精准。描述太短会导致任何后端工作都触发，路由混乱。真正有效的描述符是路由条件，不是功能介绍。数量上同样要控制：常驻系统提示的只放高频 Skill，低频的不要塞进默认列表，需要时再手动引入，极低频的直接用文档替代就够了，不必做成 Skill。
 
 - 低效（约 45 tokens）：`This skill handles the complete deployment process to production. It covers environment checks, rollback procedures...`
 - 高效（约 9 tokens）：`Use when deploying to production or rolling back.`
-
-数量控制：常驻只放高频 Skill，低频按需引入，极低频用文档替代。
 
 ## 工具设计的演变
 
@@ -112,32 +118,47 @@ Skill 的核心思路：系统提示只保留索引，完整知识按需加载�
 
 **第二代 ACI（Agent-Computer Interface）**：工具对应 Agent 目标，而非底层 API。不暴露 `create_file`、`write_content`、`set_permissions`，而是给一个 `create_script(path, content, executable)`。
 
-**第三代 Advanced Tool Use**：
-- Tool Search：按需发现工具，上下文保留率达 95%
-- Programmatic Tool Calling：模型用代码编排多个工具调用，中间结果不进 LLM 上下文
-- Tool Use Examples：每个工具附带 1-5 个调用示例，准确率从 72% 提升到 90%
+**第三代 Advanced Tool Use**：在工具设计之上，进一步优化工具的发现、调用和描述方式，主要包括三个方向：
+- Tool Search（动态工具发现）：别把全部工具定义一次性塞给模型。Agent 通过 `search_tools` 按需发现工具定义，上下文保留率可达到 95%，Opus 4 的准确率也从 49% 提升到 74%。
+- Programmatic Tool Calling（代码编排）：别让中间数据一轮轮穿过模型，而是让模型用代码编排多个工具调用，中间结果在执行环境中流转，不进入 LLM 上下文，token 消耗可从约 150,000 降到约 2,000。
+- Tool Use Examples（示例驱动）：每个工具附带 1-5 个真实调用示例。JSON Schema 只能描述参数类型，但无法表达调用方式，加入示例后，工具调用准确率可从 72% 提升到 90%。
 
 ## ACI 工具设计原则
 
-**差的工具**：参数模糊、错误不可修正、定义实现分离
+**差的工具**：参数模糊、错误不可修正、定义实现分离。
 
-**好的工具**（betaZodTool）：定义和实现绑在一起，参数描述直接约束格式，错误结构化给出修正建议：
+```typescript
+const tool = {
+  name: "update_yuque_post",
+  input_schema: {
+    properties: {
+      post_id: { type: "string" },
+      content: { type: "string" },
+    },
+  },
+};
+// 出错时
+return "Error: update failed";
+```
+
+**好的工具**（betaZodTool）：把定义和实现绑在一起，参数描述直接约束格式，错误结构化给出修正建议：
 
 ```typescript
 const updateTool = betaZodTool({
   name: "update_yuque_post",
   description: "更新语雀文章内容，不适合创建新文章",
   inputSchema: z.object({
-    post_id: z.string().describe("语雀文章 ID，纯数字字符串"),
+    post_id: z.string().describe("语雀文章 ID，纯数字字符串，如 '12345678'"),
+    title: z.string().optional().describe("文章标题，不改时可省略"),
     content_markdown: z.string().describe("Markdown 格式正文"),
   }),
-  run: async (input) => {
+  run: async (input) => {  // input 类型自动推导，问题尽量在编译期暴露
     const post = await getPost(input.post_id);
     if (!post) throw new ToolError("文章 ID 不存在", {
       error_code: "POST_NOT_FOUND",
       suggestion: "请先调用 list_yuque_posts 获取有效的 post_id",
     });
-    return await updatePost(input.post_id, undefined, input.content_markdown);
+    return await updatePost(input.post_id, input.title, input.content_markdown);
   },
 });
 ```
