@@ -39,6 +39,56 @@ Leader 会把自己的提交位置通过后续的 AppendEntries，也就是 lead
 
 MVCC 和 history 更新完成之后，KV 层再通过之前建立的 requestID 对应的 channel，把这次请求的执行结果返回给等待中的 Leader RPC，最后由 RPC 返回给客户端。
 
+## 如果日志提交了，复制给了某几个节点，leader突然宕机了怎么办
 如果 Leader 在日志已经复制给部分节点、但还没有形成多数派提交之前宕机，那么这条日志是否最终保留，要看新的 Leader 的日志情况。客户端这一次 RPC 可能收不到成功结果，因此客户端可以重试；如果这条日志最终没有提交，新的 Leader 可能会通过 Raft 的日志冲突处理覆盖掉这条未提交日志。如果它已经形成多数派并提交，那么新的 Leader 必须保证这条已经提交的日志不会被丢失，并最终 Apply 到状态机。
 
+## Raft怎么保证已经提交的日志不会丢失
+raft的投票机制
+
+## 投票的时候Follower怎么决定自己投票给谁
+
+1. 检查candidate的最新日志任期以及最新日志位置是否比自己新
+2. 检查candidate任期是否大于等与自己，否则不投票，如果大于等于，更新自己的任期和在当前任期的投票
+3. 任期相同且未投票，此时可以投票
+4. 任期若大则不投票，任期若小更新任期并规定身份为follwer
+
+## 如何用Readindex实现线性一致读
+
+当当前节点确认自己是Leader的时候，确认自己读的位置已经commit，无法回滚，Get请求可以跳过Raft日志，直接走MVCC读取需要的建。此时需要保证 Leader不过期，不然会出现新Leader当选，旧Leader仍然认为自己是Leader于是读到旧数据。Readindex方案可以解决这个问题
+Get 请求不需要作为日志写入 Raft，因为读操作本身不会修改状态机。如果每个 Get 都走 Raft 日志，会产生大量不必要的日志复制和提交开销。
+
+但是 Leader 直接读取本地 MVCC 又是不安全的，因为 Leader 可能已经失去领导权，但由于网络延迟还不知道自己已经被新 Leader 替代。这时候旧 Leader 可能读取到旧状态。
+
+所以我使用 ReadIndex 来实现线性一致读。
+
+一次 Get 到达 Leader 后，Leader 首先需要通过 ReadIndex 确认自己仍然拥有当前 Term 的领导权，并获取当前安全的 commit index，记为 readIndex。
+
+然后不能马上读取 MVCC，因为 Raft 的 commitIndex 只表示日志已经提交，不代表状态机已经执行到这个位置。因此还需要等待：
+```bash
+lastApplied >= readIndex
+```
+确认状态机已经应用到这个位置之后，Leader 再读取本地 MVCC，这样读到的就是当前已经提交状态下的数据。
+
+所以整个流程可以理解成：
+
+```bash
+Get
+  ↓
+Leader
+  ↓
+ReadIndex
+  ↓
+多数派确认当前 Leader 的领导权
+  ↓
+得到 readIndex
+  ↓
+等待 lastApplied >= readIndex
+  ↓
+读取本地 MVCC
+  ↓
+返回客户端
+```
+这样既不需要把 Get 写入 Raft 日志，又能够保证线性一致读。
+
+原来每个 Get 都独立触发 ReadIndex，导致大量请求重复进行 Leader→Follower 的确认；把同一批等待中的读请求聚合到一个 gate 上，共享一次 ReadIndex 结果，再等待状态机 Apply 到对应位置，从而降低重复的 Raft 通信和同步等待。
 ...
