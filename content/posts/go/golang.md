@@ -41,6 +41,22 @@ toc-auto-numbering: false
 -P 是调度器运行所需要的处理器资源，保存调度相关的状态和本地运行队列。
 GOMAXPROCS 决定同时有多少个 P 可以执行 Go 代码，例如 GOMAXPROCS=2 时，最多有两个 P 同时运行 Go 代码，P 会绑定到 M 上，由 M 执行 P 当前调度的 G。大量 G 可以被少量 M 和 P 调度执行，所以 goroutine 并不是一个 goroutine 对应一个操作系统线程。
 
+### 工作流程：
+一个 goroutine 创建之后，会进入 runnable 状态，通常先放到当前 P 的本地运行队列，也可能进入全局队列。M 获取一个 P，然后从 P 的本地队列中取出 G 执行。如果本地队列没有 G，还可以从全局队列或者其他 P 的队列中获取任务，这就是 work stealing。
+
+### 阻塞 Handoff
+如果 G 在执行过程中发生普通的 goroutine 阻塞，比如等待 channel、锁等，G 会进入 waiting 状态，当前 M 可以继续调度其他 runnable G，不需要阻塞整个线程。
+
+如果 G 发生阻塞的系统调用，情况有所不同。G 会进入 syscall 状态，M 可能被操作系统阻塞。runtime 会通过 entersyscall 等机制让当前 P 与这个执行 syscall 的 G/M 脱离绑定，使 P 可以被其他 M 获取。其他 M 获取 P 后，就可以继续执行这个 P 上其他 runnable 的 G。
+
+当 syscall 返回时，G 进入 exitsyscall 流程，runtime 会尝试让这个 G 重新获得一个 P。如果有空闲 P，就可以重新绑定 P 并继续执行；如果暂时没有可用的 P，这个 G 会进入 runnable 状态，等待之后重新调度，而执行 syscall 的 M 也可能继续参与调度或者进入空闲状态
+
+## 工作窃取
+当某个 P 的本地运行队列没有可执行的 G 时，它会尝试从其他 P 的本地运行队列中“偷”一部分 G 来执行，从而提高 CPU 利用率、减少某些 P 空闲而其他 P 忙碌的情况。
+
+## 抢占调度
+当一个 G 长时间占用 CPU、不主动让出执行权时，Go runtime 可以强制让它暂停，把 CPU 执行机会交给其他 runnable 的 G，避免一个 G 长时间霸占 P。
+
 ## 值传递
 *Go 只有值传递*
 
