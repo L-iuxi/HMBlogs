@@ -14,8 +14,6 @@ toc-auto-numbering: false
 <!--more-->
 # Go 语言
 
-
-
 ## 并发和并行
 并发：两个线程交替推进，看起来同时执行。
 
