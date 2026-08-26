@@ -1,3 +1,17 @@
+---
+title: "context&interface"
+date: "2026-03-27T12:00:00+08:00"
+tags: ["go"]
+title-images: []
+ending-images: []
+author: "烩面"
+draft: false
+table-of-contents: true
+toc-auto-numbering: false
+---
+<!-- introduction -->
+关于GO
+<!--more-->
 # context
 context实际上是一个接口，提供了四种方法 `Done()`,`Deadline()`,`Err()`,`Value()`，可以在一个请求链路中，优雅地传递取消信号，超时，和截止日期，并且携带一些范围内的键值对数据
 
