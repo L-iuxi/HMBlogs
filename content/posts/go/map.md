@@ -1,6 +1,6 @@
 ---
 title: "Map和Channel"
-date: "2026-08-25T12:00:00+08:00"
+date: "2026-03-25T12:00:00+08:00"
 tags: ["go"]
 title-images: []
 ending-images: []
@@ -108,7 +108,7 @@ type hchan struct {
 
 channel怎么唤醒阻塞的gourtine：
 
-阻塞的 goroutine 会通过 sudog 加入 channel 的 sendq 或 recvq。当另一方进行发送或接收时，runtime 会从对应等待队列中取出 sudog，通过 goready 将对应 goroutine 从等待状态转为 runnable，之后由 Go 调度器重新调度执行。/
+阻塞的 goroutine 会通过 sudog 加入 channel 的 sendq 或 recvq。当另一方进行发送或接收时，runtime 会从对应等待队列中取出 sudog，通过 goready 将对应 goroutine 从等待状态转为 runnable，之后由 Go 调度器重新调度执行。
 
 ## 发送数据过程
 向某个channel发送数据之后
@@ -118,3 +118,20 @@ channel怎么唤醒阻塞的gourtine：
 - 没有接受者则写入缓冲区，检查缓冲区是否还有位置，当前队列中元素数量小于队列容量的时候，继续写入sendx下标位置，调用gopark让当前goutine阻塞，让出cpu
   
 - 如果缓冲区满了，创建一个sudog，加入sendq阻塞等待调用gopark让当前goutine阻塞，让出cpu
+  
+  读取数据的过程与发送数据流程大致相同
+
+- 向已经关闭的channel写入数据会触发panic，向已经关闭的channel读数据，如果缓冲区有数据仍然能读到，只有返回的ok为false的时候，读出的数据无效
+
+## select的执行机制
+select会检查哪个case满足条件可以执行，如果有多个case满足条件，select会随机选择一个执行，如果没有case可以执行，要么default，没有default的时候阻塞等待
+
+注册select的时候
+
+创建select -> 注册case -> 执行select -> 释放select
+
+case随机化➕双重循环检测：
+
+定义select的时候会定义scase，存放所有case数据包括default，在runtime层面实现
+
+case会随机排序，第一次轮询检测的时候检查是否有case符合要求，如果没有进行第二次检测，第二次检测把当前groutine加入等待接收队列或者等待发送队列，调用gopark让出cpu
