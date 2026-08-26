@@ -30,6 +30,7 @@ type hmap struct {
     extra *mapextra //指向mapextra的指针，存放溢出桶
 }
 
+
 type mapextra struct {
     overflow    *[]*bmap
     oldoverflow *[]*bmap
@@ -130,7 +131,7 @@ select会检查哪个case满足条件可以执行，如果有多个case满足条
 
 创建select -> 注册case -> 执行select -> 释放select
 
-case随机化➕双重循环检测：
+**case随机化➕双重循环检测：**
 
 定义select的时候会定义scase，存放所有case数据包括default，在runtime层面实现
 
