@@ -1,6 +1,6 @@
 ---
 title: "MySQL索引"
-date: "2026-04-18T12:00:00+08:00"
+date: "2025-04-18T12:00:00+08:00"
 tags: ["mysql"]
 title-images: []
 ending-images: []
