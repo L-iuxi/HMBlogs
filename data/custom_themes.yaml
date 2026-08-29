@@ -1,4 +1,5 @@
 - name: "clean"
+  emoji: "🥔"
   site-bg: "dot-bg.svg"
   accent-color: "#d4a017"
   select-color: "#fff3cd"
@@ -15,3 +16,22 @@
   list-style:
     image: ""
     type: "● "
+
+- name: "rain"
+  emoji: "💧"
+  site-bg: "rain-bg.svg"
+  accent-color: "#3b82f6"
+  select-color: "#dbeafe"
+  link-color: "#1d4ed8"
+  bg-color: "#e0f2fe"
+  text-color: "#1e3a5f"
+  bg2-color: "#ffffff"
+  border-color: "#60a5fa"
+  post-shadow-color: "#60a5fa33"
+  special-text-color: "#1e40af"
+  post-header-color: "#ffffff"
+  post-outline-color: "#60a5fa"
+  post-outline-color2: "#dbeafe"
+  list-style:
+    image: ""
+    type: "💧 "

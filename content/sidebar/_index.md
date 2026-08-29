@@ -1,6 +1,6 @@
 ---
 headless: true
 icon-use-flower-shape: false
-icon-path: "avatar.jpg"
+icon-path: "avatar.png"
 links: []
 ---

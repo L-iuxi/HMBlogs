@@ -18,11 +18,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="index, follow">
     <meta charset="utf-8">
+    <script>try{const t=localStorage.getItem('blog-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 </head>
 <body>
+<div class="rain-layer" id="rain-layer"></div>
 <main>
     {{ block "main" . }}{{ end }}
     {{ if .Param "nextprev" }}{{ partial "nextprev.html" . }}{{ end }}
 </main>
+<script>
+(function () {
+    var layer = document.getElementById('rain-layer');
+    if (!layer) return;
+    function spawnSplash(left) {
+        var s = document.createElement('span');
+        s.className = 'splash';
+        s.style.left = left;
+        layer.appendChild(s);
+        setTimeout(function () { s.remove(); }, 500);
+    }
+    var count = 350;
+    for (var i = 0; i < count; i++) {
+        var d = document.createElement('span');
+        d.className = 'rain-drop';
+        d.style.left = (Math.random() * 100) + 'vw';
+        d.style.width = (1 + Math.random() * 1.5) + 'px';
+        d.style.height = (8 + Math.random() * 16) + 'px';
+        d.style.animationDuration = (0.6 + Math.random() * 0.9) + 's';
+        d.style.animationDelay = (Math.random() * 2) + 's';
+        d.style.setProperty('--o', (0.5 + Math.random() * 0.4).toFixed(2));
+        d.addEventListener('animationiteration', function () {
+            if (Math.random() < 0.15) spawnSplash(this.style.left);
+        });
+        layer.appendChild(d);
+    }
+})();
+</script>
 </body>
 </html>

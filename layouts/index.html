@@ -14,7 +14,7 @@
     <aside id="sidebar">
         <div id="avatar">
             {{ with .Site.GetPage "section" "/sidebar/_index.md" }}
-            <img class="flower" src="{{ (index .Params "icon-path") | absURL }}">
+            <img class="flower" src="{{ (index .Params "icon-path") | relURL }}">
             {{ end }}
         </div>
         
@@ -67,24 +67,28 @@
         <article id="top" class="clearfix">
             {{ with .Site.GetPage "section" "/welcome-header/_index.md" }}
             <section>
-            <div class="img-right">
-                <img src="{{ .Params.image | absURL }}">
+            <div class="theme-switcher">
+            {{ range .Site.Data.custom_themes }}
+                <button class="theme-dot" data-theme="{{ .name }}" title="{{ .name }}" style="background: {{ index . "accent-color" }}">{{ .emoji }}</button>
+            {{ end }}
             </div>
             <div>
             <h1>{{ .Params.title }}</h1>
-            {{ range .Params.intro }}
-                <p>{{ . }}</p>
-            {{ end }}
             </div>
             </section>
             <section>
-            <h4>{{ .Params.list.name }}</h4>
-                <ul>
-                {{ range .Params.list.items }}
-                    <li>{{ . }}</li>
-                {{ end }}
-                </ul>
+            <div class="widget" id="clock-weather-widget">
+                <div class="clock" id="cute-clock">--:--:--</div>
+                <div class="clock-date" id="cute-date"></div>
+                <div class="weather" id="cute-weather">天气加载中…</div>
+            </div>
             </section>
+            {{ if .Params.contribution.enable }}
+            <section>
+            <h4>Contributions</h4>
+            <img class="contribution-chart" src="{{ printf "https://ghchart.rshah.org/%s" .Params.contribution.username }}" alt="GitHub contribution chart" loading="lazy">
+            </section>
+            {{ end }}
             {{ end }}
         </article>
     {{ $limit := index (index .Site.Params "read-more") "length-limit" }}
@@ -177,6 +181,58 @@
 
         dropbox.toggleAttribute("visible");
     }
+    </script>
+    <script>
+    // 主题切换
+    var themeDots = document.querySelectorAll('.theme-dot');
+    function applyTheme(name) {
+        document.documentElement.setAttribute('data-theme', name);
+        themeDots.forEach(function(d) { d.classList.toggle('active', d.dataset.theme === name); });
+    }
+    try {
+        var savedTheme = localStorage.getItem('blog-theme');
+        if (savedTheme) applyTheme(savedTheme);
+    } catch (e) {}
+    themeDots.forEach(function(d) {
+        d.addEventListener('click', function() {
+            applyTheme(d.dataset.theme);
+            try { localStorage.setItem('blog-theme', d.dataset.theme); } catch (e) {}
+        });
+    });
+
+    // 可爱时钟
+    function tickClock() {
+        var now = new Date();
+        var h = now.getHours();
+        var hh = String(h).padStart(2, '0');
+        var mm = String(now.getMinutes()).padStart(2, '0');
+        var ss = String(now.getSeconds()).padStart(2, '0');
+        var e = '☀️';
+        if (h < 5) e = '🌙';
+        else if (h < 11) e = '🌅';
+        else if (h < 18) e = '☀️';
+        else if (h < 21) e = '🌇';
+        else e = '🌙';
+        document.getElementById('cute-clock').textContent = e + ' ' + hh + ':' + mm + ':' + ss;
+        document.getElementById('cute-date').textContent = now.toLocaleDateString('zh-CN', {year:'numeric', month:'long', day:'numeric', weekday:'long'});
+    }
+    tickClock();
+    setInterval(tickClock, 1000);
+
+    // 天气
+    var WMO = {0:'☀️ 晴',1:'🌤 晴间多云',2:'⛅ 多云',3:'☁️ 阴',45:'🌫 雾',48:'🌫 雾凇',51:'🌦 毛毛雨',53:'🌦 毛毛雨',55:'🌦 毛毛雨',61:'🌧 小雨',63:'🌧 中雨',65:'🌧 大雨',71:'🌨 小雪',73:'🌨 中雪',75:'🌨 大雪',80:'🌦 阵雨',81:'🌧 阵雨',82:'🌧 强阵雨',95:'⛈ 雷雨',96:'⛈ 雷雨冰雹',99:'⛈ 强雷雨'};
+    async function loadWeather() {
+        var el = document.getElementById('cute-weather');
+        try {
+            var geo = await (await fetch('https://ipapi.co/json/')).json();
+            var w = await (await fetch('https://api.open-meteo.com/v1/forecast?latitude=' + geo.latitude + '&longitude=' + geo.longitude + '&current=temperature_2m,weather_code')).json();
+            var c = w.current.weather_code;
+            el.textContent = (geo.city || '') + ' ' + Math.round(w.current.temperature_2m) + '°C ' + (WMO[c] || '🌈');
+        } catch (e) {
+            el.textContent = '天气加载失败';
+        }
+    }
+    loadWeather();
     </script>
     </main>
 {{ end }}
