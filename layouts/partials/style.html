@@ -28,7 +28,11 @@
 
 {{ range .Site.Data.custom_themes }}
 :root[data-theme="{{ .name }}"] {
+    {{ if (index . "site-bg") }}
     --site-bg: url("{{ (index . "site-bg") | absURL }}");
+    {{ else }}
+    --site-bg: none;
+    {{ end }}
     --accent-color: {{ index . "accent-color" }};
     --select-color: {{ index . "select-color" }};
     --link-color: {{ index . "link-color" }};

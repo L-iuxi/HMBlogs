@@ -19,7 +19,7 @@
 
 - name: "rain"
   emoji: "💧"
-  site-bg: "rain-bg.svg"
+  site-bg: ""
   accent-color: "#3b82f6"
   select-color: "#dbeafe"
   link-color: "#1d4ed8"
