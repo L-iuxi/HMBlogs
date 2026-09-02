@@ -112,3 +112,10 @@ lease实现绑定过期时间并且对过期建进行删除，后台启动协程
 
 ## 为什么要先持久化日志，再推进commitindex
 因为 Raft 要保证节点崩溃恢复后，已经接受的日志不会因为只存在内存中而丢失，所以 Leader 会先将日志持久化到 WAL，再通过 AppendEntries 向其他节点复制。需要注意，WAL 持久化只代表本节点数据可靠，不代表日志已经 commit，只有获得多数派确认后才能推进 commitIndex。
+
+## 怎么实现动态成员变更
+支持运行时的 AddPeer 和 RemovePeer。成员变更时首先对 Raft 状态加锁，Add 时检查节点是否存在，然后建立对应的 gRPC peer 连接，将节点加入 peers，同时初始化它的 nextIndex 和 matchIndex；Remove 时关闭对应连接，并同步从 peers、clients、nextIndex、matchIndex 等结构中删除节点。成员变化后通过 peerGen 自增，让正在执行的心跳和选举 goroutine 能够检测成员配置是否发生变化，避免继续使用旧的成员列表。
+
+# learner 解决什么问题
+Follower 一旦成为正式成员，就拥有投票权，会影响 quorum；而 Learner 可以先完成数据同步，再获得投票权，避免一个严重落后的新节点影响集群的选举和提交。
+可以先将新节点作为 Learner 加入，让 Leader 向它同步 Raft 日志和状态。当 Learner 的日志追平到一定程度后，再将其提升为正式 voter。这样新节点在数据未同步完成之前不会参与 quorum 和 Leader 选举，降低成员变更对集群可用性的影响。
