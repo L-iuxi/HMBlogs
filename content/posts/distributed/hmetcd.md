@@ -19,7 +19,7 @@ toc-auto-numbering: false
 -选型（mvcc+badgerdb+raft）
 -实现功能
 
-HMETCD 是一个用 Go 语言实现的基于 Raft 的多节点分布式KV存储，整体实现参考ETCD。客户端通过grpc 请求节点，写请求进入 Leader 后通过 Raft 复制和提交，再由 ApplyLoop 进入状态机，最后由 MVCC 管理版本落实到 BadgerDB。Raft 解决多节点下数据一致性，MVCC 做多版本管理，BadgerDB 负责存储层持久化。在这个基础上我实现了 Watch，lease，Txn，Compact，分布式锁以及客户端和各节点的grpc通信
+HMETCD 是一个用 Go 语言实现的基于 Raft 的多节点分布式KV存储，整体实现参考ETCD。客户端通过 grpc 请求节点，写请求进入 Leader 后通过 Raft 复制和提交，再由 ApplyLoop 进入状态机，最后由 MVCC 管理版本落实到 BadgerDB。Raft 解决多节点下数据一致性，MVCC 做多版本管理，BadgerDB 负责存储层持久化。在这个基础上我实现了 Watch，lease，Txn，Compact，分布式锁以及客户端和各节点的grpc通信
 
 ## Put请求全链路
 
@@ -116,6 +116,10 @@ lease实现绑定过期时间并且对过期建进行删除，后台启动协程
 ## 怎么实现动态成员变更
 支持运行时的 AddPeer 和 RemovePeer。成员变更时首先对 Raft 状态加锁，Add 时检查节点是否存在，然后建立对应的 gRPC peer 连接，将节点加入 peers，同时初始化它的 nextIndex 和 matchIndex；Remove 时关闭对应连接，并同步从 peers、clients、nextIndex、matchIndex 等结构中删除节点。成员变化后通过 peerGen 自增，让正在执行的心跳和选举 goroutine 能够检测成员配置是否发生变化，避免继续使用旧的成员列表。
 
-# learner 解决什么问题
+## learner 解决什么问题
 Follower 一旦成为正式成员，就拥有投票权，会影响 quorum；而 Learner 可以先完成数据同步，再获得投票权，避免一个严重落后的新节点影响集群的选举和提交。
 可以先将新节点作为 Learner 加入，让 Leader 向它同步 Raft 日志和状态。当 Learner 的日志追平到一定程度后，再将其提升为正式 voter。这样新节点在数据未同步完成之前不会参与 quorum 和 Leader 选举，降低成员变更对集群可用性的影响。
+
+## 为什么用BadgerDB
+ETCD是使用的是基于B+树实现的BoltDB，我使用的是基于LSM实现的BadgerDB。LSM用读放大换取特别高的写入性能
+如果使用BoltDB的话实现MVCC就要实现类似copy on write的方法，如果用BadgerDB的话可以通过不同的版本号天然维护MVCC，实现上更简单一点
