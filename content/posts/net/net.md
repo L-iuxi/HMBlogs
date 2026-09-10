@@ -1,6 +1,6 @@
 ---
 title: "Net"
-date: "2025-09-7T12:00:00+08:00"
+date: "2025-09-07T12:00:00+08:00"
 tags: ["mysql"]
 title-images: []
 ending-images: []
@@ -12,8 +12,8 @@ toc-auto-numbering: false
 <!-- introduction -->
 关于网络的一些基础知识
 <!--more-->
-##
-socket通过`write()`,`send()`等函数，把数据从用户态拷贝到内核态缓冲区，再通过TCP/IP协议经由网卡发送
+## socket
+通过`write()`,`send()`等函数，把数据从用户态拷贝到内核态缓冲区，再通过TCP/IP协议经由网卡发送
 
 ## DNS
 DNS全称域名系统 是将域名转换为IP的分布式数据库系统
