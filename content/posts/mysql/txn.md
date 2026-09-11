@@ -28,7 +28,7 @@ toc-auto-numbering: false
 
 ## 事务隔离级别
 事务隔离级别本质是并发性能和数据一致性之间的取舍
-![alt text](image.png)
+![事务隔离级别](txn-image.png)
 read uncommited读未提交：基本不提供隔离
 read commited读已提交：只能读到其他事务已经提交的数据。使用mvcc解决
 repeated read可重复读：同一个事务中的普通一致性读，看到的是一致的快照

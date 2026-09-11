@@ -67,4 +67,4 @@ grpc中相当于中间件，包在真正的调用外面，请求进出都需要�
 GRPC内置TLS，创建长连接时指定凭证
 客户端自动负载均衡+重试
 GRPC-Gateway一套proto定义，两种协议对外
-![alt text](image.png)
+![gRPC](grpc-image.png)

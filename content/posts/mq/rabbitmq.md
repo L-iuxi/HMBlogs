@@ -13,5 +13,5 @@ toc-auto-numbering: false
 关于RabbitMQ
 <!--more-->
 
-![alt text](image.png)
-![alt text](image-1.png)
+![RabbitMQ](rabbitmq-image.png)
+![RabbitMQ](rabbitmq-image-1.png)
