@@ -1,5 +1,5 @@
 ---
-title: "MySQL索引"
+title: "MySQL键"
 date: "2025-04-18T12:00:00+08:00"
 tags: ["mysql"]
 title-images: []
@@ -12,6 +12,7 @@ toc-auto-numbering: false
 <!-- introduction -->
 关于SQL索引
 <!--more-->
+
 ## 主键 Primary Key
 主键是对某一条记录的唯一标识
 主键唯一，且一张表只能有一个主键
