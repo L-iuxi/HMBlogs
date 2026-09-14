@@ -1,3 +1,17 @@
+---
+title: "关于HMETCD持久化"
+date: "2026-08-13T12:00:00+08:00"
+tags: ["Raft", "ETCD"]
+title-images: []
+ending-images: []
+author: "喷了很多发胶的烩面"
+draft: false
+table-of-contents: true
+toc-auto-numbering: false
+---
+<!-- introduction -->
+一些比较ran的项目流程问题
+<!--more-->
 # 关于我的KV存储项目的持久化
 # 总览
 
