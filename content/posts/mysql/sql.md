@@ -11,7 +11,8 @@ toc-auto-numbering: false
 ---
 <!-- introduction -->
 关于SQL
-<!--more-->5
+<!--more-->
+
 ## SQL和NOSQL
 关系型数据库sql支持ACID，即原子性，一致性，持久性，隔离性
 非关系型数据库支持BASE：

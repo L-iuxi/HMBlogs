@@ -1,6 +1,6 @@
 ---
 title: "MySQL引擎"
-date: "2026-07-19T12:00:00+08:00"
+date: "2025-05-19T12:00:00+08:00"
 tags: ["go"]
 title-images: []
 ending-images: []
@@ -11,12 +11,12 @@ toc-auto-numbering: false
 ---
 <!-- introduction -->
 关于MySQL引擎
-<!--more-->
+<!--more-->5
 # MySQL里面的引擎是什么？
 存储引擎决定 MySQL 如何存储数据、建立索引、读写数据以及是否支持事务、锁等功能。
 
 # MYSQL执行一条语句的过程
-![alt text](image.png)
+![alt text](innodb.png)
 连接器：建立连接，校验连接，管理连接
 1. 查询缓存：如果命中缓存直接返回，否则继续查询。MySQL8.0版本后已经删除
 2. 解析SQL：通过解析器对SQL查询进行语法分析，建立语法树。语法树是对SQL语句的结构化分析，根据不同的token拆分。

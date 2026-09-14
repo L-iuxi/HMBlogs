@@ -64,7 +64,7 @@ MySQL的默认隔离等级是可重复读
 
 
 > read view是什么？
-![alt text](image-1.png)  
+![alt text](readview.png)  
 read view维护这样四个数据
 - m_id:在创建read view的时候，当前数库中活跃的事务id列表。其中活跃事务指的是启动了但是还没有提交的事务
 - min_trv_id:活跃事务中最小id最小的事务
