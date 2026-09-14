@@ -1,7 +1,7 @@
 ---
 title: "Net"
 date: "2025-09-07T12:00:00+08:00"
-tags: ["mysql"]
+tags: ["net"]
 title-images: []
 ending-images: []
 author: "烩面"
