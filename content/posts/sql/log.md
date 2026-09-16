@@ -24,7 +24,7 @@ toc-auto-numbering: false
 binlog主要有三种格式：Statment，Row，Mixed，现在默认ROW
 - Statment记录每一次修改操作，但是如果在执行的时候使用动态函数，可能导致同一条语句执行结果不同的情况。比如uuid，now这些函数。
 - ROW，记录行数据最终被修改成什么样了。但是ROW的缺点是更新多少行就会产生多少条数据，binlog文件过大，如果是Statment的话只会记录一个update语句
-- Mixed是以上两种的混合，根据不同情况自动选择使用模式
+- Mixed是以上两种的混合，根据不同情况自动选择使用模式5
   
 # undolog
 在事务提交之前，会先将要回退的操作记录在undolog之中。以便事务失败的回滚
