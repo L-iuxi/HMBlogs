@@ -11,7 +11,8 @@ toc-auto-numbering: false
 ---
 <!-- introduction -->
 关于MySQL引擎
-<!--more-->5
+<!--more-->
+
 # MySQL里面的引擎是什么？
 存储引擎决定 MySQL 如何存储数据、建立索引、读写数据以及是否支持事务、锁等功能。
 
