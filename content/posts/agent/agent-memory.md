@@ -12,6 +12,7 @@ toc-auto-numbering: false
 <!-- introduction -->
 Agent 的记忆
 <!--more-->
+
 # Agent的四种记忆类型
 Agent有四种记忆类型，按照最短到最持久来分类。
 ## 感知记忆
