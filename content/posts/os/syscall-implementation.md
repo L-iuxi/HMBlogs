@@ -2,7 +2,7 @@
 title: "完善内核 — 系统调用的实现"
 date: "2026-01-21T10:00:00+08:00"
 tags: ["操作系统", "系统调用"]
-book: "操作系统真相还原"
+book: "操作系统真象还原"
 chapter: 8
 title-images: []
 ending-images: []

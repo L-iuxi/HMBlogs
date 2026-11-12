@@ -2,7 +2,7 @@
 title: "磁盘驱动 — 创建磁盘与分区操作"
 date: "2026-01-21T12:00:00+08:00"
 tags: ["操作系统", "磁盘"]
-book: "操作系统真相还原"
+book: "操作系统真象还原"
 chapter: 9
 title-images: []
 ending-images: []

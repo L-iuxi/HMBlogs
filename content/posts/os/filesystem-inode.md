@@ -2,7 +2,7 @@
 title: "文件系统 — inode 与文件查找流程"
 date: "2026-01-21T14:00:00+08:00"
 tags: ["操作系统", "文件系统"]
-book: "操作系统真相还原"
+book: "操作系统真象还原"
 chapter: 10
 title-images: []
 ending-images: []

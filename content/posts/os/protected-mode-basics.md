@@ -2,7 +2,7 @@
 title: "保护模式入门 — 从实模式到保护模式"
 date: "2026-01-14T10:00:00+08:00"
 tags: ["操作系统", "保护模式"]
-book: "操作系统真相还原"
+book: "操作系统真象还原"
 chapter: 1
 title-images: []
 ending-images: []
