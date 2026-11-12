@@ -2,6 +2,8 @@
 title: "内存管理系统 — 文件时间、断言与位图"
 date: "2026-01-18T10:00:00+08:00"
 tags: ["操作系统", "内存管理"]
+book: "操作系统真相还原"
+chapter: 4
 title-images: []
 ending-images: []
 author: "烩面"

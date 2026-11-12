@@ -1,0 +1,13 @@
+{{ define "main" }}
+<article style="padding-left: 2rem;">
+    <h2>{{ .Title }}</h2>
+    {{ range (where .Site.RegularPages "Section" "posts").GroupByParam "book" }}
+    <h3>{{ .Key }}</h3>
+    <ol>
+        {{ range sort .Pages "Params.chapter" }}
+        <li style="margin-bottom: .4rem;"><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{ end }}
+    </ol>
+    {{ end }}
+</article>
+{{ end }}

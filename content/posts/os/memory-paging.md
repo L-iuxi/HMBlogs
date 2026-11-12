@@ -2,6 +2,8 @@
 title: "保护模式进阶 — 内存检测与页表机制"
 date: "2026-01-14T12:00:00+08:00"
 tags: ["操作系统", "内存管理"]
+book: "操作系统真相还原"
+chapter: 2
 title-images: []
 ending-images: []
 author: "烩面"

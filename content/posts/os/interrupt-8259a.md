@@ -2,6 +2,8 @@
 title: "中断机制 — 8259A 可编程中断控制器"
 date: "2026-01-15T10:00:00+08:00"
 tags: ["操作系统", "中断"]
+book: "操作系统真相还原"
+chapter: 3
 title-images: []
 ending-images: []
 author: "烩面"

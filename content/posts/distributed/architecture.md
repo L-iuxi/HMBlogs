@@ -2,6 +2,8 @@
 title: "数据系统架构"
 date: "2026-11-11T16:00:00+08:00"
 tags: ["database"]
+book: "设计数据密集型应用（DDIA）"
+chapter: 1
 title-images: []
 ending-images: []
 author: "烩面"

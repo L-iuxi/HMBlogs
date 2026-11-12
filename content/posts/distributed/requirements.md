@@ -2,6 +2,8 @@
 title: "非功能需求"
 date: "2026-11-11T12:00:00+08:00"
 tags: ["distributed"]
+book: "设计数据密集型应用（DDIA）"
+chapter: 2
 title-images: []
 ending-images: []
 author: "烩面"
