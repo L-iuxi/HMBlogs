@@ -1,7 +1,7 @@
 ---
 title: "IO多路复用"
 date: "2026-03-21T12:00:00+08:00"
-tags: ["网络", "IO多路复用"]
+tags: ["网络", "IO"]
 title-images: []
 ending-images: []
 author: "吃的很饱的烩面"

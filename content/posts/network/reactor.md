@@ -1,7 +1,7 @@
 ---
 title: "Reactor"
 date: "2026-08-13T12:00:00+08:00"
-tags: ["网络", "IO多路复用", "Reactor"]
+tags: ["网络", "IO"]
 title-images: []
 ending-images: []
 author: "烩面"
