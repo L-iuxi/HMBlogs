@@ -224,7 +224,15 @@
     async function loadWeather() {
         var el = document.getElementById('cute-weather');
         try {
-            var geo = await (await fetch('https://ipapi.co/json/')).json();
+            var geo;
+            try {
+                var g1 = await (await fetch('https://ipwho.is/')).json();
+                if (!g1.success) throw new Error('ipwho failed');
+                geo = { city: g1.city, latitude: g1.latitude, longitude: g1.longitude };
+            } catch (e1) {
+                var g2 = await (await fetch('https://get.geojs.io/v1/ip/geo.json')).json();
+                geo = { city: g2.city, latitude: g2.latitude, longitude: g2.longitude };
+            }
             var w = await (await fetch('https://api.open-meteo.com/v1/forecast?latitude=' + geo.latitude + '&longitude=' + geo.longitude + '&current=temperature_2m,weather_code')).json();
             var c = w.current.weather_code;
             el.textContent = (geo.city || '') + ' ' + Math.round(w.current.temperature_2m) + '°C ' + (WMO[c] || '🌈');
