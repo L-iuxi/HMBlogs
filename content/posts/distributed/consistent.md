@@ -1,6 +1,6 @@
 ---
 title: "分布式一致性和常见算法"
-date: "2026-11-12T12:00:00+08:00"
+date: "2026-11-11T12:00:00+08:00"
 tags: ["Raft", "Paxos","ZAB"]
 title-images: []
 ending-images: []
