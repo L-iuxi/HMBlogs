@@ -1,7 +1,7 @@
 ---
 title: "关于HMETCD——类etcd的kv存储项目"
 date: "2026-08-13T12:00:00+08:00"
-tags: ["Raft", "ETCD"]
+tags: ["分布式", "Raft", "ETCD"]
 title-images: []
 ending-images: []
 author: "喷了很多发胶的烩面"

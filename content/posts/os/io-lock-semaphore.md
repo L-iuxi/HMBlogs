@@ -1,7 +1,7 @@
 ---
 title: "输入输出系统 — 锁、信号量与键盘驱动"
 date: "2026-01-19T10:00:00+08:00"
-tags: ["操作系统", "IO"]
+tags: ["操作系统", "IO", "note"]
 book: "操作系统真象还原"
 chapter: 6
 title-images: []

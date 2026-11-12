@@ -1,7 +1,7 @@
 ---
 title: "关于锁"
 date: "2026-09-10T12:00:00+08:00"
-tags: ["OS"]
+tags: ["操作系统", "锁"]
 title-images: []
 ending-images: []
 author: "面"

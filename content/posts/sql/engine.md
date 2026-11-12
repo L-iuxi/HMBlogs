@@ -1,7 +1,7 @@
 ---
 title: "MySQL引擎"
 date: "2025-05-19T12:00:00+08:00"
-tags: ["go"]
+tags: ["MySQL", "存储引擎"]
 title-images: []
 ending-images: []
 author: "烩面"

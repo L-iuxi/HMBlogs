@@ -1,7 +1,7 @@
 ---
 title: "关于内存"
 date: "2026-09-12T12:00:00+08:00"
-tags: ["OS"]
+tags: ["操作系统", "内存管理"]
 title-images: []
 ending-images: []
 author: "很困的面"

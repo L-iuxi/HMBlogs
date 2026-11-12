@@ -1,7 +1,7 @@
 ---
 title: "context&interface"
 date: "2026-03-27T12:00:00+08:00"
-tags: ["go"]
+tags: ["Go", "context"]
 title-images: []
 ending-images: []
 author: "烩面"

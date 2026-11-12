@@ -1,7 +1,7 @@
 ---
 title: "MySQL基本"
 date: "2025-05-18T12:00:00+08:00"
-tags: ["mysql"]
+tags: ["MySQL"]
 title-images: []
 ending-images: []
 author: "烩面"

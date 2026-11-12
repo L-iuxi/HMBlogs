@@ -1,7 +1,7 @@
 ---
 title: "多线程与任务调度 — PCB、ABI 与轮询调度"
 date: "2026-01-18T12:00:00+08:00"
-tags: ["操作系统", "线程"]
+tags: ["操作系统", "线程", "note"]
 book: "操作系统真象还原"
 chapter: 5
 title-images: []

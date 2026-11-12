@@ -1,7 +1,7 @@
 ---
 title: "MySQL日志"
 date: "2025-04-15T12:00:00+08:00"
-tags: ["mysql"]
+tags: ["MySQL", "日志"]
 title-images: []
 ending-images: []
 author: "烩面"

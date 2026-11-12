@@ -1,7 +1,7 @@
 ---
 title: "用户进程 — TSS 任务状态段"
 date: "2026-01-20T10:00:00+08:00"
-tags: ["操作系统", "进程"]
+tags: ["操作系统", "进程", "note"]
 book: "操作系统真象还原"
 chapter: 7
 title-images: []

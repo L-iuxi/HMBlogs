@@ -1,7 +1,7 @@
 ---
 title: "关于操作系统"
 date: "2026-09-09T12:00:00+08:00"
-tags: ["OS"]
+tags: ["操作系统", "进程线程"]
 title-images: []
 ending-images: []
 author: "面"

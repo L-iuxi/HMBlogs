@@ -1,7 +1,7 @@
 ---
 title: "gRPC"
 date: "2026-04-26T12:00:00+08:00"
-tags: ["go"]
+tags: ["gRPC"]
 title-images: []
 ending-images: []
 author: "开心的面"

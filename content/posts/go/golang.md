@@ -1,7 +1,7 @@
 ---
 title: "Go!"
 date: "2026-03-15T12:00:00+08:00"
-tags: ["go"]
+tags: ["Go"]
 title-images: []
 ending-images: []
 author: "烩面"
