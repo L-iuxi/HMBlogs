@@ -49,7 +49,7 @@ toc-auto-numbering: false
 3. 达到多数派后，proposer 发起 accept 请求，请求包含提案编号和内容。
 4. 如果各个 Accpetor 在此期间没有接受过任何编号大于 N 的请求，接受提案内容。
  
-![alt text](image.png)
+![Basic Paxos](paxos-basic.png)
 
 多个 Propser 发起请求，不断提出更高编号的提案，可能会导致**活锁**。所以为了解决这个问题，可以使用单 Propser，避免多个节点竞争。或者**随机退避**，在 Proposer 被拒绝的时候，不要立刻重试，而是随机等待一段时间。
 
@@ -57,7 +57,7 @@ Basic Paxos存在难实现，2PC效率低，活锁的问题，引入了Multi Pax
 
 ### Multi Paxos
 相比较于 Basic Paxos，Multi Paxos 引入 Leader，唯一的 Proposer ，所有请求都需要经过此 Leader，那么 Basic Paxos 的第一个阶段就可以和第二个阶段就可以合并，不过要加一个选举 Leader 的步骤。
-![alt text](image-1.png)
+![Multi Paxos](paxos-multi.png)
 
 ## Raft
 Raft包括 Leader，Follower，Candidate 三个角色。Raft 做三件事：选举 Leader，复制日志，保证一致性。
