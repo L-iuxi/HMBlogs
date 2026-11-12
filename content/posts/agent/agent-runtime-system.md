@@ -1,7 +1,7 @@
 ---
 title: "Agent Runtime — 运行时系统深度解析"
 date: "2026-08-12T16:00:00+08:00"
-tags: ["Agent", "运行时"]
+tags: ["Agent"]
 title-images: []
 ending-images: []
 author: "烩面"
