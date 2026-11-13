@@ -735,5 +735,49 @@ article h2 a:hover {
     100% { transform: translateY(-16px) scale(0.5); opacity: 0; }
 }
 
+.puddle {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 44px;
+    background: linear-gradient(to bottom, rgba(147,197,253,.08), rgba(59,130,246,.35) 45%, rgba(30,64,175,.45));
+    border-top: 1px solid rgba(191,219,254,.7);
+    box-shadow: inset 0 6px 10px -6px rgba(255,255,255,.6);
+    overflow: hidden;
+}
+.puddle::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(90deg, transparent 0 60px, rgba(255,255,255,.22) 60px 90px, transparent 90px 170px);
+    background-size: 340px 100%;
+    animation: puddle-shimmer 8s linear infinite;
+}
+@keyframes puddle-shimmer { to { background-position: 340px 0; } }
+
+.cloud-layer {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 35vh;
+    background: linear-gradient(to bottom, rgba(71,85,105,.55), rgba(100,116,139,.2) 60%, transparent);
+    overflow: hidden;
+}
+.cloud-layer::before, .cloud-layer::after {
+    content: '';
+    position: absolute;
+    top: -8vh; left: -20%;
+    width: 140%; height: 30vh;
+    background:
+        radial-gradient(ellipse 220px 70px at 15% 50%, rgba(51,65,85,.55), transparent 70%),
+        radial-gradient(ellipse 300px 90px at 45% 40%, rgba(71,85,105,.5), transparent 70%),
+        radial-gradient(ellipse 260px 80px at 78% 55%, rgba(51,65,85,.55), transparent 70%);
+    animation: cloud-drift 60s ease-in-out infinite alternate;
+}
+.cloud-layer::after {
+    top: -4vh;
+    opacity: .7;
+    animation-duration: 90s;
+    animation-direction: alternate-reverse;
+}
+@keyframes cloud-drift { from { transform: translateX(-6%); } to { transform: translateX(6%); } }
+
 body > main { position: relative; z-index: 1; }
 </style>

@@ -21,7 +21,7 @@
     <script>try{const t=localStorage.getItem('blog-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 </head>
 <body>
-<div class="rain-layer" id="rain-layer"></div>
+<div class="rain-layer" id="rain-layer"><div class="cloud-layer"></div><div class="puddle"></div></div>
 <main>
     {{ block "main" . }}{{ end }}
     {{ if .Param "nextprev" }}{{ partial "nextprev.html" . }}{{ end }}
@@ -34,6 +34,7 @@
         var s = document.createElement('span');
         s.className = 'splash';
         s.style.left = left;
+        s.style.bottom = (6 + Math.random() * 30) + 'px';
         layer.appendChild(s);
         setTimeout(function () { s.remove(); }, 500);
     }
