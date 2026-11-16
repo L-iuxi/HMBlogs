@@ -3,7 +3,7 @@ title: "存储和查询"
 date: "2026-11-16T20:15:00+08:00"
 tags: ["分布式", "note"]
 book: "设计数据密集型应用（DDIA）"
-chapter: 1
+chapter: 4
 title-images: []
 ending-images: []
 author: "烩面"
