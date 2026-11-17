@@ -1,11 +1,14 @@
 {{ define "main" }}
 <style>
-    .book { display: flex; gap: 1.2rem; align-items: flex-start; margin-bottom: 2rem; }
-    .book-cover { width: 110px; flex-shrink: 0; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
-    .book h3 { margin-top: 0; }
+    .book { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.2rem; }
+    .book-cover { width: 76px; flex-shrink: 0; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+    .book h3 { margin: 0 0 .4rem; font-size: 1em; }
+    .book-page { max-width: 760px; margin: 1rem auto; padding: 1rem 1.4rem; font-size: 13px; }
+    .book-page h2 { margin: 0 0 1rem; font-size: 1.15em; }
+    .book-page ol { margin: 0; padding-left: 1.4rem; }
     @media (max-width: 600px) { .book { flex-direction: column; } }
 </style>
-<article style="padding-left: 2rem;">
+<article class="book-page">
     <h2>{{ .Title }}</h2>
     {{ $meta := .Params.books }}
     {{ range (where .Site.RegularPages "Section" "posts").GroupByParam "book" }}
@@ -18,7 +21,7 @@
             <h3>{{ $name }}</h3>
             <ol>
                 {{ range sort .Pages "Params.chapter" }}
-                <li style="margin-bottom: .4rem;"><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+                <li style="margin-bottom: .25rem;"><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
                 {{ end }}
             </ol>
         </div>
