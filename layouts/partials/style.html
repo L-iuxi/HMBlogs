@@ -679,7 +679,7 @@ article h2 a:hover {
 .rain-drop {
     position: absolute;
     top: -12vh;
-    background: linear-gradient(to bottom, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.85));
+    background: linear-gradient(to bottom, rgba(100, 150, 225, 0.08), rgba(100, 150, 225, 0.65));
     opacity: var(--o, 0.7);
     animation: rain-fall linear infinite;
 }
@@ -695,71 +695,106 @@ article h2 a:hover {
     bottom: 40px;
     width: 2px;
     height: 2px;
-    border-radius: 50%;
     pointer-events: none;
     transform: translateX(-50%);
 }
 
+/* 外环：各边深浅不一、略不规则 */
 .splash::before {
     content: '';
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 5px;
-    height: 2.5px;
-    border-radius: 50%;
-    border: 1px solid rgba(59, 130, 246, 0.4);
-    animation: splash-ripple 0.45s ease-out forwards;
+    width: 7px;
+    height: 2px;
+    margin-left: -3.5px;
+    border-radius: 46% 54% 50% 50% / 55% 45% 55% 45%;
+    border: 1px solid transparent;
+    border-top-color: rgba(255, 255, 255, var(--a1, 0.55));
+    border-right-color: rgba(120, 170, 235, var(--a2, 0.12));
+    border-bottom-color: rgba(60, 115, 210, var(--a3, 0.5));
+    border-left-color: rgba(100, 155, 230, var(--a4, 0.22));
+    transform: rotate(var(--rot, 0deg));
+    animation: splash-ripple 0.85s ease-out forwards;
 }
 
+/* 内环：更小更淡、稍晚出现 */
 .splash::after {
     content: '';
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 3px;
-    height: 3px;
+    width: 4px;
+    height: 1.2px;
+    margin-left: -2px;
     border-radius: 50%;
-    background: rgba(59, 130, 246, 0.8);
-    box-shadow: -5px 0 0 -1px rgba(59, 130, 246, 0.6), 5px 0 0 -1px rgba(59, 130, 246, 0.6);
-    animation: splash-burst 0.45s ease-out forwards;
+    border: 1px solid transparent;
+    border-top-color: rgba(255, 255, 255, 0.4);
+    border-bottom-color: rgba(70, 125, 215, 0.3);
+    opacity: 0;
+    animation: splash-ripple-inner 0.7s ease-out 0.12s forwards;
+}
+
+/* 飞溅的小水粒 */
+.splash i {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: var(--s, 2px);
+    height: var(--s, 2px);
+    margin-left: calc(var(--s, 2px) / -2);
+    border-radius: 50%;
+    background: var(--c, rgba(90, 145, 225, 0.7));
+    opacity: 0;
+    animation: splash-x var(--t, 0.55s) linear forwards, splash-y var(--t, 0.55s) forwards;
 }
 
 @keyframes splash-ripple {
-    0%   { transform: scale(0.5); opacity: 0.45; }
-    100% { transform: scale(6); opacity: 0; }
+    0%   { scale: 0.4; opacity: 0.7; }
+    100% { scale: 4.5; opacity: 0; }
 }
 
-@keyframes splash-burst {
-    0%   { transform: translateY(0) scale(1); opacity: 1; }
-    100% { transform: translateY(-16px) scale(0.5); opacity: 0; }
+@keyframes splash-ripple-inner {
+    0%   { scale: 0.4; opacity: 0.6; }
+    100% { scale: 3; opacity: 0; }
+}
+
+@keyframes splash-x {
+    from { translate: 0 0; }
+    to   { translate: var(--dx, 0px) 0; }
+}
+
+@keyframes splash-y {
+    0%   { transform: translateY(0); opacity: 1; animation-timing-function: cubic-bezier(.2,.7,.4,1); }
+    45%  { transform: translateY(calc(var(--dy, 12px) * -1)); opacity: 1; animation-timing-function: cubic-bezier(.6,0,.9,.5); }
+    100% { transform: translateY(2px); opacity: 0; }
 }
 
 .puddle {
     position: absolute;
     left: 0; right: 0; bottom: 0;
-    height: 44px;
-    background: linear-gradient(to bottom, rgba(147,197,253,.12), rgba(59,130,246,.38) 30%, rgba(30,64,175,.2) 70%, transparent);
-    border-top: 1px solid rgba(191,219,254,.7);
-    box-shadow: inset 0 6px 10px -6px rgba(255,255,255,.6);
+    height: 260px;
+    background: linear-gradient(to top, rgba(96,165,250,.32) 0%, rgba(110,175,250,.22) 25%, rgba(130,190,250,.12) 55%, rgba(160,210,252,.04) 85%, transparent 100%);
+    border-top: none;
+    box-shadow: none;
 }
 
 .cloud-layer {
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 42vh;
-    background: linear-gradient(to bottom, rgba(71,85,105,.55), rgba(100,116,139,.2) 60%, transparent);
+    height: 75vh;
+    background: linear-gradient(to bottom, rgba(85,105,138,.50) 0%, rgba(105,128,162,.36) 30%, rgba(130,155,190,.20) 60%, rgba(170,195,225,.07) 85%, transparent 100%);
     overflow: hidden;
 }
 .cloud-layer::before, .cloud-layer::after {
     content: '';
     position: absolute;
     top: -8vh; left: -20%;
-    width: 140%; height: 36vh;
+    width: 140%; height: 56vh;
     background:
-        radial-gradient(ellipse 220px 70px at 15% 50%, rgba(51,65,85,.55), transparent 70%),
-        radial-gradient(ellipse 300px 90px at 45% 40%, rgba(71,85,105,.5), transparent 70%),
-        radial-gradient(ellipse 260px 80px at 78% 55%, rgba(51,65,85,.55), transparent 70%);
+        radial-gradient(ellipse 380px 140px at 15% 50%, rgba(65,85,118,.38), transparent 70%),
+        radial-gradient(ellipse 520px 170px at 45% 40%, rgba(75,95,128,.36), transparent 70%),
+        radial-gradient(ellipse 440px 150px at 78% 55%, rgba(65,85,118,.38), transparent 70%);
     animation: cloud-drift 60s ease-in-out infinite alternate;
 }
 .cloud-layer::after {
@@ -771,4 +806,268 @@ article h2 a:hover {
 @keyframes cloud-drift { from { transform: translateX(-6%); } to { transform: translateX(6%); } }
 
 body > main { position: relative; z-index: 1; }
+
+/* ===== 磨砂玻璃：文章页文字框 ===== */
+#single-post article,
+#content article,
+#sidebar,
+.table-of-contents {
+    background-color: color-mix(in srgb, var(--bg-color2) 55%, transparent);
+    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.05) 60%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 1rem;
+    box-shadow: 0 12px 40px color-mix(in srgb, var(--text-color) 28%, transparent),
+                0 2px 8px color-mix(in srgb, var(--text-color) 15%, transparent),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+#single-post article {
+    line-height: 1.9;
+    letter-spacing: 0.04em;
+}
+
+#single-post article p,
+#single-post article li {
+    line-height: 1.9;
+}
+
+#single-post article pre,
+#single-post article code {
+    letter-spacing: normal;
+    line-height: 1.5;
+}
+
+/* ===== 雨天：玻璃上滑落的水珠 ===== */
+#single-post article,
+#content article,
+#sidebar { position: relative; }
+
+.glass-drops {
+    display: none;
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 2;
+}
+
+:root[data-theme="rain"] .glass-drops { display: block; }
+
+.glass-drop {
+    position: absolute;
+    top: -6%;
+    width: var(--w, 7px);
+    height: calc(var(--w, 7px) * var(--k, 1.6));
+    border-radius: var(--br, 50% 50% 48% 52% / 38% 42% 58% 62%);
+    transform: rotate(var(--rot, 0deg));
+    -webkit-backdrop-filter: blur(1.8px) saturate(120%);
+    backdrop-filter: blur(1.8px) saturate(120%);
+    background: radial-gradient(ellipse at 32% 26%, rgba(255,255,255,.75) 0 10%, rgba(255,255,255,.14) 34%, rgba(150,190,240,.06) 75%);
+    box-shadow: inset -1px -2px 3px rgba(60,100,170,.16), inset 1px 1px 2px rgba(255,255,255,.55), 0 1px 3px rgba(40,80,150,.18);
+    opacity: 0;
+    animation: glass-slide var(--dur, 60s) linear infinite;
+    animation-delay: var(--delay, 0s);
+}
+
+.glass-drop::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 60%;
+    width: 38%;
+    height: var(--tail, 50px);
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: linear-gradient(to top, rgba(255,255,255,.4), rgba(255,255,255,.12) 55%, transparent);
+}
+
+@keyframes glass-slide {
+    0%   { top: -6%;  opacity: 0; animation-timing-function: ease-in; }
+    3%   { opacity: 1; }
+    20%  { top: 20%;  animation-timing-function: ease-out; }
+    28%  { top: 21%;  animation-timing-function: ease-in; }
+    55%  { top: 57%;  animation-timing-function: ease-out; }
+    63%  { top: 58%;  animation-timing-function: ease-in; }
+    82%  { top: 88%;  opacity: 1; }
+    92%  { top: 100%; opacity: 0; }
+    100% { top: 100%; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .glass-drops { display: none !important; }
+}
+
+/* 雨天：框浮在乌云之上，不被云色染灰 */
+:root[data-theme="rain"] #single-post article,
+:root[data-theme="rain"] #content article,
+:root[data-theme="rain"] #sidebar,
+:root[data-theme="rain"] .table-of-contents {
+    background-color: rgba(255, 255, 255, 0.46);
+    -webkit-backdrop-filter: blur(22px) saturate(140%) brightness(1.18);
+    backdrop-filter: blur(22px) saturate(140%) brightness(1.18);
+    box-shadow: 0 18px 50px rgba(30, 58, 95, 0.28),
+                0 4px 12px rgba(30, 58, 95, 0.16),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+#content article pre {
+    background-color: color-mix(in srgb, var(--bg-color2) 50%, transparent);
+    border-color: color-mix(in srgb, var(--outline-color) 50%, transparent);
+}
+
+#top section {
+    background-color: color-mix(in srgb, var(--bg-color2) 40%, transparent);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+#sidebar #bio {
+    background: color-mix(in srgb, var(--bg-color) 45%, transparent);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+}
+
+.site-title {
+    text-align: center;
+    margin: .8em 0 .6em;
+    font-size: 1.5em;
+    font-weight: bold;
+    letter-spacing: .12em;
+    color: var(--text-color);
+}
+
+.header-github {
+    display: flex;
+    align-items: center;
+}
+
+.theme-dot {
+    background: color-mix(in srgb, var(--dot) 38%, transparent);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-color: color-mix(in srgb, var(--dot) 55%, rgba(255, 255, 255, 0.6));
+    box-shadow: 0 3px 10px color-mix(in srgb, var(--text-color) 18%, transparent),
+                inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.github-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.4em;
+    height: 3.4em;
+    border-radius: 50%;
+    color: var(--special-text-color);
+    background: color-mix(in srgb, var(--bg-color2) 50%, transparent);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--text-color) 22%, transparent),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.github-link:visited { color: var(--special-text-color); }
+
+.github-link:hover {
+    color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px color-mix(in srgb, var(--text-color) 30%, transparent),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* 主页布局：左侧栏收窄，右侧内容变宽 */
+@media only screen and (min-width: 801px) {
+    #content {
+        max-width: 1120px;
+    }
+
+    #sidebar {
+        width: 310px;
+        min-width: 310px;
+        flex-shrink: 0;
+        margin-right: 1em;
+    }
+
+    #sidebar #avatar {
+        max-width: 100%;
+    }
+
+    #sidebar .flower {
+        width: 100%;
+        height: auto;
+    }
+
+    #sidebar #bio {
+        margin: 14px;
+    }
+
+    #sidebar div.tags,
+    #sidebar ul.tags {
+        text-align: left;
+        padding-left: 18px;
+        padding-right: 14px;
+    }
+
+    #sidebar ul.tags {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: .25em .6em;
+    }
+
+    #sidebar ul.tags li {
+        margin: 0;
+    }
+
+    #sidebar ul.tags li a {
+        font-size: 12px;
+        font-weight: normal;
+    }
+
+    #sidebar div.tags > p.tags {
+        text-align: left;
+        font-size: 12px;
+        margin: .6em 0 .3em;
+    }
+
+    #sidebar div.tags > a {
+        font-size: 12px;
+    }
+
+    #content > main {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+/* Markdown 引用块（> 开头） */
+article blockquote {
+    margin: 1.1em 0;
+    padding: .3em 1.1em;
+    border-left: 4px solid var(--accent-color);
+    border-radius: 0 .6em .6em 0;
+    background: color-mix(in srgb, var(--text-color) 9%, transparent);
+    color: color-mix(in srgb, var(--text-color) 85%, transparent);
+}
+
+article blockquote p {
+    margin: .6em 0;
+}
+
+article blockquote blockquote {
+    margin: .6em 0;
+    background: color-mix(in srgb, var(--text-color) 7%, transparent);
+}
+
+#single-post article h1 {
+    color: var(--text-color);
+    filter: none;
+}
+
+#single-post article pre {
+    background-color: color-mix(in srgb, var(--bg-color2) 50%, transparent);
+    border-color: color-mix(in srgb, var(--outline-color) 50%, transparent);
+}
 </style>

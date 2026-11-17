@@ -1,0 +1,41 @@
+<script>
+(function () {
+    var els = document.querySelectorAll({{ . | jsonify | safeJS }});
+    if (!els.length) return;
+    function rnd(a, b) { return a + Math.random() * (b - a); }
+    function pct(v) { return v.toFixed(0) + '%'; }
+    function build(el, layer) {
+        layer.textContent = '';
+        var h = el.offsetHeight;
+        var n = Math.max(2, Math.min(22, Math.round(h / 230)));
+        for (var i = 0; i < n; i++) {
+            var d = document.createElement('span');
+            d.className = 'glass-drop';
+            var speed = rnd(22, 50);
+            var dur = h * 1.1 / speed;
+            d.style.left = rnd(3, 97) + '%';
+            d.style.setProperty('--w', rnd(5, 9).toFixed(1) + 'px');
+            d.style.setProperty('--k', rnd(1.4, 2.3).toFixed(2));
+            d.style.setProperty('--rot', rnd(-8, 8).toFixed(1) + 'deg');
+            d.style.setProperty('--br', [rnd(40, 60), rnd(40, 60), rnd(45, 55), rnd(45, 55)].map(pct).join(' ') + ' / ' + [rnd(32, 46), rnd(36, 48), rnd(52, 66), rnd(58, 68)].map(pct).join(' '));
+            d.style.setProperty('--tail', rnd(20, 60).toFixed(0) + 'px');
+            d.style.setProperty('--dur', dur.toFixed(1) + 's');
+            d.style.setProperty('--delay', (-Math.random() * dur).toFixed(1) + 's');
+            layer.appendChild(d);
+        }
+    }
+    els.forEach(function (el) {
+        var layer = document.createElement('div');
+        layer.className = 'glass-drops';
+        el.appendChild(layer);
+        var timer, lastH = el.offsetHeight;
+        function rebuild() { clearTimeout(timer); timer = setTimeout(function () { lastH = el.offsetHeight; build(el, layer); }, 200); }
+        build(el, layer);
+        window.addEventListener('load', rebuild);
+        window.addEventListener('resize', rebuild);
+        if (window.ResizeObserver) {
+            new ResizeObserver(function () { if (Math.abs(el.offsetHeight - lastH) > 40) rebuild(); }).observe(el);
+        }
+    });
+})();
+</script>

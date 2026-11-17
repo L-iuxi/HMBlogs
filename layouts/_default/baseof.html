@@ -34,22 +34,38 @@
         var s = document.createElement('span');
         s.className = 'splash';
         s.style.left = left;
-        s.style.bottom = (6 + Math.random() * 30) + 'px';
+        s.style.bottom = (4 + Math.random() * 90) + 'px';
+        s.style.setProperty('--rot', ((Math.random() - 0.5) * 14).toFixed(1) + 'deg');
+        s.style.setProperty('--a1', (0.3 + Math.random() * 0.4).toFixed(2));
+        s.style.setProperty('--a2', (0.04 + Math.random() * 0.2).toFixed(2));
+        s.style.setProperty('--a3', (0.3 + Math.random() * 0.35).toFixed(2));
+        s.style.setProperty('--a4', (0.08 + Math.random() * 0.3).toFixed(2));
+        var n = Math.random() < 0.4 ? 1 + Math.floor(Math.random() * 2) : 0;
+        for (var k = 0; k < n; k++) {
+            var p = document.createElement('i');
+            var dir = Math.random() < 0.5 ? -1 : 1;
+            p.style.setProperty('--dx', (dir * (3 + Math.random() * 9)).toFixed(1) + 'px');
+            p.style.setProperty('--dy', (4 + Math.random() * 8).toFixed(1) + 'px');
+            p.style.setProperty('--s', (1 + Math.random() * 1.2).toFixed(1) + 'px');
+            p.style.setProperty('--t', (0.4 + Math.random() * 0.3).toFixed(2) + 's');
+            p.style.setProperty('--c', Math.random() < 0.35 ? 'rgba(255,255,255,0.6)' : 'rgba(' + (80 + Math.random() * 40 | 0) + ',' + (135 + Math.random() * 30 | 0) + ',225,' + (0.5 + Math.random() * 0.4).toFixed(2) + ')');
+            s.appendChild(p);
+        }
         layer.appendChild(s);
-        setTimeout(function () { s.remove(); }, 500);
+        setTimeout(function () { s.remove(); }, 1000);
     }
-    var count = 350;
+    var count = 110;
     for (var i = 0; i < count; i++) {
         var d = document.createElement('span');
         d.className = 'rain-drop';
         d.style.left = (Math.random() * 100) + 'vw';
-        d.style.width = (1 + Math.random() * 1.5) + 'px';
-        d.style.height = (8 + Math.random() * 16) + 'px';
+        d.style.width = (2 + Math.random() * 1.6) + 'px';
+        d.style.height = (18 + Math.random() * 24) + 'px';
         d.style.animationDuration = (0.6 + Math.random() * 0.9) + 's';
         d.style.animationDelay = (Math.random() * 2) + 's';
-        d.style.setProperty('--o', (0.5 + Math.random() * 0.4).toFixed(2));
+        d.style.setProperty('--o', (0.45 + Math.random() * 0.35).toFixed(2));
         d.addEventListener('animationiteration', function () {
-            if (Math.random() < 0.15) spawnSplash(this.style.left);
+            if (Math.random() < 0.45) spawnSplash(this.style.left);
         });
         layer.appendChild(d);
     }
