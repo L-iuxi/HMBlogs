@@ -1,10 +1,10 @@
 {{ define "main" }}
 <style>
-    .book { display: flex; gap: .9rem; align-items: flex-start; margin-bottom: 1rem; padding: .9rem 1.1rem; }
-    .book-cover { width: 62px; flex-shrink: 0; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
-    .book h3 { margin: 0 0 .4rem; font-size: 1em; }
-    .book-page { max-width: 640px; margin: 1rem auto; font-size: 12px; }
-    .book-page h2 { margin: 0 0 .8rem .3rem; font-size: 1.15em; color: var(--text-color); }
+    .book { display: flex; gap: 1.2rem; align-items: flex-start; margin-bottom: 1.2rem; padding: 1.2rem 1.5rem; }
+    .book-cover { width: 92px; flex-shrink: 0; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+    .book h3 { margin: 0 0 .4rem; font-size: 1.15em; }
+    .book-page { max-width: 840px; margin: 1.2rem auto; font-size: 14px; }
+    .book-page h2 { margin: 0 0 .8rem .3rem; font-size: 1.4em; color: var(--text-color); }
     .book-page ol { margin: 0; padding-left: 1.4rem; }
     @media (max-width: 600px) { .book { flex-direction: column; } }
 </style>
@@ -21,7 +21,7 @@
             <h3>{{ $name }}</h3>
             <ol>
                 {{ range sort .Pages "Params.chapter" }}
-                <li style="margin-bottom: .15rem;"><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+                <li style="margin-bottom: .3rem;"><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
                 {{ end }}
             </ol>
         </div>
