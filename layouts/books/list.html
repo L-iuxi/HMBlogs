@@ -1,14 +1,14 @@
 {{ define "main" }}
 <style>
-    .book { display: flex; gap: .8rem; align-items: flex-start; margin-bottom: 1rem; }
+    .book { display: flex; gap: .9rem; align-items: flex-start; margin-bottom: 1rem; padding: .9rem 1.1rem; }
     .book-cover { width: 62px; flex-shrink: 0; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
     .book h3 { margin: 0 0 .4rem; font-size: 1em; }
-    .book-page { max-width: 640px; margin: 1rem auto; padding: .8rem 1.1rem; font-size: 12px; }
-    .book-page h2 { margin: 0 0 1rem; font-size: 1.15em; }
+    .book-page { max-width: 640px; margin: 1rem auto; font-size: 12px; }
+    .book-page h2 { margin: 0 0 .8rem .3rem; font-size: 1.15em; color: var(--text-color); }
     .book-page ol { margin: 0; padding-left: 1.4rem; }
     @media (max-width: 600px) { .book { flex-direction: column; } }
 </style>
-<article class="book-page">
+<div class="book-page">
     <h2>{{ .Title }}</h2>
     {{ $meta := .Params.books }}
     {{ range (where .Site.RegularPages "Section" "posts").GroupByParam "book" }}
@@ -27,5 +27,5 @@
         </div>
     </div>
     {{ end }}
-</article>
+</div>
 {{ end }}

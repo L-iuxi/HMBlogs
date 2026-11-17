@@ -810,7 +810,7 @@ body > main { position: relative; z-index: 1; }
 /* ===== 磨砂玻璃：文章页文字框 ===== */
 #single-post article,
 #content article,
-.book-page,
+.book,
 #sidebar,
 .table-of-contents {
     background-color: color-mix(in srgb, var(--bg-color2) 55%, transparent);
@@ -904,7 +904,7 @@ body > main { position: relative; z-index: 1; }
 /* 雨天：框浮在乌云之上，不被云色染灰 */
 :root[data-theme="rain"] #single-post article,
 :root[data-theme="rain"] #content article,
-:root[data-theme="rain"] .book-page,
+:root[data-theme="rain"] .book,
 :root[data-theme="rain"] #sidebar,
 :root[data-theme="rain"] .table-of-contents {
     background-color: rgba(255, 255, 255, 0.46);
@@ -1061,6 +1061,32 @@ article blockquote p {
 article blockquote blockquote {
     margin: .6em 0;
     background: color-mix(in srgb, var(--text-color) 7%, transparent);
+}
+
+/* 主页侧栏 Book Note 按键：小号玻璃 */
+#sidebar nav.links {
+    margin: .6em 1em 1em;
+}
+
+#sidebar nav.links > ul {
+    line-height: 1.4;
+}
+
+#sidebar nav.links li > a {
+    display: inline-block;
+    font-size: 12px;
+    padding: .4em 1.6em;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--bg-color2) 45%, transparent);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--text-color) 18%, transparent),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+#sidebar nav.links li > a:hover {
+    background: color-mix(in srgb, var(--select-color) 60%, transparent);
 }
 
 #single-post article h1 {
